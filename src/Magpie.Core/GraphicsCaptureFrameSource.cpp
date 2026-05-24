@@ -340,12 +340,14 @@ bool GraphicsCaptureFrameSource::_StartCapture() noexcept {
 		}
 
 		// Win11 24H2 中必须设置 MinUpdateInterval 才能使捕获帧率超过 60FPS
+#ifdef NTDDI_WIN11_GE
 		if (winrt::ApiInformation::IsPropertyPresent(
 			winrt::name_of<winrt::GraphicsCaptureSession>(),
 			L"MinUpdateInterval"
 		)) {
 			_captureSession.MinUpdateInterval(1ms);
 		}
+#endif
 
 		_captureSession.StartCapture();
 	} catch (const winrt::hresult_error& e) {
