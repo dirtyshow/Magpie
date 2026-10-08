@@ -98,6 +98,9 @@ ScalingError SrcTracker::Set(HWND hWnd, const ScalingOptions& options, bool& isI
 		return ScalingError::ScalingFailedGeneral;
 	}
 
+	// 視窗移動時兩者同步移動，尺寸改變則會重新縮放，因此只需在這裡計算一次
+	_clientOffset = { clientRect.left - _windowRect.left, clientRect.top - _windowRect.top };
+
 	// 计算窗口样式
 	BOOL hasBorder = TRUE;
 	bool hasCustomNonclient = false;

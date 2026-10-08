@@ -1171,6 +1171,13 @@ ScalingError ScalingWindow::_InitialMoveSrcWindowInFullscreen() noexcept {
 			|| !MonitorFromPoint(POINT{ srcRect.right,srcRect.bottom }, MONITOR_DEFAULTTONULL);
 	}
 
+	if (!shouldMove && _options.IsCompensateCursorOffset()) {
+		// 補償游標偏移時系統游標會進入標題列和邊框，它們也必須在螢幕內，否則游標無法到達
+		const POINT clientOffset = _srcTracker.ClientOffset();
+		shouldMove = !MonitorFromPoint(
+			POINT{ srcRect.left - clientOffset.x,srcRect.top - clientOffset.y }, MONITOR_DEFAULTTONULL);
+	}
+
 	if (shouldMove) {
 		// 不要跨屏幕移动，否则如果 DPI 缩放不同会造成源窗口尺寸改变
 		int offsetX = mi.rcMonitor.left + (monitorSize.cx - srcSize.cx) / 2 - srcRect.left;

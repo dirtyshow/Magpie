@@ -60,6 +60,11 @@ public:
 		return _srcRect;
 	}
 
+	// 客戶區左上角相對於視窗矩形（GetWindowRect）左上角的偏移
+	POINT ClientOffset() const noexcept {
+		return _clientOffset;
+	}
+
 	bool IsFocused() const noexcept {
 		return _isFocused;
 	}
@@ -91,6 +96,7 @@ private:
 	RECT _windowRect{};
 	RECT _windowFrameRect{};
 	RECT _srcRect{};
+	POINT _clientOffset{};
 	SrcWindowKind _windowKind = SrcWindowKind::Native;
 
 	bool _isFocused = false;

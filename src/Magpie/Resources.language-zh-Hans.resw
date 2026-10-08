@@ -537,6 +537,12 @@
   <data name="Profile_Cursor_DrawCursor_AdjustCursorSpeed.Header" xml:space="preserve">
     <value>缩放时调整光标速度</value>
   </data>
+  <data name="Profile_Cursor_CompensateCursorOffset.Header" xml:space="preserve">
+    <value>补偿光标偏移</value>
+  </data>
+  <data name="Profile_Cursor_CompensateCursorOffset.Description" xml:space="preserve">
+    <value>用于以窗口左上角而非客户区计算光标位置的老游戏，修复光标无法移到画面顶部或左侧的问题</value>
+  </data>
   <data name="Profile_Cursor_DrawCursor_Interpolation.Header" xml:space="preserve">
     <value>插值算法</value>
   </data>

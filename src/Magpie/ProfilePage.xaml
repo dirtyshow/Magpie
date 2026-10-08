@@ -629,6 +629,13 @@
 					<ToggleSwitch x:Uid="ToggleSwitch"
 					              IsOn="{x:Bind ViewModel.IsAdjustCursorSpeed, Mode=TwoWay}" />
 				</local:SettingsCard>
+				<local:SettingsCard x:Uid="Profile_Cursor_CompensateCursorOffset">
+					<local:SettingsCard.HeaderIcon>
+						<FontIcon Glyph="&#xE7C9;" />
+					</local:SettingsCard.HeaderIcon>
+					<ToggleSwitch x:Uid="ToggleSwitch"
+					              IsOn="{x:Bind ViewModel.IsCompensateCursorOffset, Mode=TwoWay}" />
+				</local:SettingsCard>
 			</local:SettingsGroup>
 			<local:SettingsGroup x:Uid="Profile_Advanced">
 				<local:SettingsCard x:Name="LaunchParametersSettingsCard"

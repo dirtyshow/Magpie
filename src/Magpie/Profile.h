@@ -65,6 +65,7 @@ struct Profile {
 	DEFINE_FLAG_ACCESSOR(IsCaptureTitleBar, ScalingFlags::CaptureTitleBar, scalingFlags)
 	DEFINE_FLAG_ACCESSOR(IsAdjustCursorSpeed, ScalingFlags::AdjustCursorSpeed, scalingFlags)
 	DEFINE_FLAG_ACCESSOR(IsDirectFlipDisabled, ScalingFlags::DisableDirectFlip, scalingFlags)
+	DEFINE_FLAG_ACCESSOR(IsCompensateCursorOffset, ScalingFlags::CompensateCursorOffset, scalingFlags)
 
 	// 出错时返回空
 	std::filesystem::path GetScreenshotsDir() const noexcept;

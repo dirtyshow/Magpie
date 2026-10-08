@@ -172,7 +172,9 @@ enum class ScalingFlags {
 	DisableFP16 = 1 << 16,
 	BenchmarkMode = 1 << 17,
 	DeveloperMode = 1 << 18,
-	DisableTopmost = 1 << 19
+	DisableTopmost = 1 << 19,
+	// 補償以視窗左上角（而非客戶區左上角）為原點計算游標座標的程式造成的偏移
+	CompensateCursorOffset = 1 << 20
 };
 // NOLINTNEXTLINE(clang-analyzer-optin.core.EnumCastOutOfRange)
 DEFINE_ENUM_FLAG_OPERATORS(ScalingFlags)
@@ -198,6 +200,7 @@ struct ScalingOptions {
 	DEFINE_FLAG_ACCESSOR(IsBenchmarkMode, ScalingFlags::BenchmarkMode, flags)
 	DEFINE_FLAG_ACCESSOR(IsDeveloperMode, ScalingFlags::DeveloperMode, flags)
 	DEFINE_FLAG_ACCESSOR(IsTopmostDisabled, ScalingFlags::DisableTopmost, flags)
+	DEFINE_FLAG_ACCESSOR(IsCompensateCursorOffset, ScalingFlags::CompensateCursorOffset, flags)
 
 	std::vector<EffectOption> effects;
 	ScalingFlags flags = ScalingFlags::AdjustCursorSpeed;

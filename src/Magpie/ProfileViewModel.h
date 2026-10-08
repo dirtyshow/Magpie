@@ -143,6 +143,9 @@ struct ProfileViewModel : ProfileViewModelT<ProfileViewModel>,
 	bool IsAdjustCursorSpeed() const noexcept;
 	void IsAdjustCursorSpeed(bool value);
 
+	bool IsCompensateCursorOffset() const noexcept;
+	void IsCompensateCursorOffset(bool value);
+
 	int CursorScaling() const noexcept;
 	void CursorScaling(int value);
 

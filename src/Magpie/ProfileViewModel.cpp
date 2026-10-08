@@ -769,6 +769,21 @@ void ProfileViewModel::IsAdjustCursorSpeed(bool value) {
 	RaisePropertyChanged(L"IsAdjustCursorSpeed");
 }
 
+bool ProfileViewModel::IsCompensateCursorOffset() const noexcept {
+	return _data->IsCompensateCursorOffset();
+}
+
+void ProfileViewModel::IsCompensateCursorOffset(bool value) {
+	if (_data->IsCompensateCursorOffset() == value) {
+		return;
+	}
+
+	_data->IsCompensateCursorOffset(value);
+	AppSettings::Get().SaveAsync();
+
+	RaisePropertyChanged(L"IsCompensateCursorOffset");
+}
+
 int ProfileViewModel::CursorScaling() const noexcept {
 	return (int)_data->cursorScaling;
 }

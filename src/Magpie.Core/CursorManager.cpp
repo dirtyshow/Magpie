@@ -10,12 +10,24 @@
 
 namespace Magpie {
 
+// 用於游標映射的源矩形。有些程式（如武林立志傳）以 GetCursorPos 減去 GetWindowRect 左上角
+// 計算游標座標，遊戲內座標比客戶區座標多出標題列和邊框的寬度。開啟「補償游標偏移」時將源矩形
+// 向左上平移這段距離，系統游標因此可以進入標題列和邊框，遊戲內游標則能到達畫面邊緣。
+static RECT CursorSrcRect() noexcept {
+	RECT rect = ScalingWindow::Get().Renderer().SrcRect();
+	if (ScalingWindow::Get().Options().IsCompensateCursorOffset()) {
+		const POINT offset = ScalingWindow::Get().SrcTracker().ClientOffset();
+		Win32Helper::OffsetRect(rect, -offset.x, -offset.y);
+	}
+	return rect;
+}
+
 // 将源窗口的光标位置映射到缩放后的光标位置。当光标位于源窗口之外，与源窗口的距离不会缩放。
 // 对于光标，第一个像素映射到第一个像素，最后一个像素映射到最后一个像素，因此光标区域的缩放
 // 倍率和窗口缩放倍率不同！
 static POINT SrcToScaling(POINT pt, bool skipBorder) noexcept {
 	const Renderer& renderer = ScalingWindow::Get().Renderer();
-	const RECT& srcRect = renderer.SrcRect();
+	const RECT srcRect = CursorSrcRect();
 	const RECT& destRect = renderer.DestRect();
 	const RECT& rendererRect = ScalingWindow::Get().RendererRect();
 
@@ -50,7 +62,7 @@ enum class RoundMethod {
 
 static POINT ScalingToSrc(POINT pt, RoundMethod roundType = RoundMethod::Round) noexcept {
 	const Renderer& renderer = ScalingWindow::Get().Renderer();
-	const RECT& srcRect = renderer.SrcRect();
+	const RECT srcRect = CursorSrcRect();
 	const RECT& destRect = renderer.DestRect();
 
 	const SIZE srcSize = Win32Helper::GetSizeOfRect(srcRect);
@@ -490,7 +502,7 @@ void CursorManager::_UpdateCursorState() noexcept {
 
 	const ScalingOptions& options = ScalingWindow::Get().Options();
 	const Renderer& renderer = ScalingWindow::Get().Renderer();
-	const RECT& srcRect = renderer.SrcRect();
+	const RECT srcRect = CursorSrcRect();
 	const RECT& destRect = renderer.DestRect();
 
 	// 优先级: 
@@ -828,7 +840,7 @@ void CursorManager::_ClipCursorForMonitors(POINT cursorPos) noexcept {
 
 	const RECT& rendererRect = ScalingWindow::Get().RendererRect();
 	const Renderer& renderer = ScalingWindow::Get().Renderer();
-	const RECT& srcRect = renderer.SrcRect();
+	const RECT srcRect = CursorSrcRect();
 	const RECT& destRect = renderer.DestRect();
 
 	const bool isSrcFocused = ScalingWindow::Get().SrcTracker().IsFocused();
@@ -1163,7 +1175,7 @@ bool CursorManager::_StopCapture(POINT& cursorPos, bool onDestroy) noexcept {
 		return true;
 	} else {
 		// 目标位置不存在屏幕，则将光标限制在源窗口内
-		const RECT& srcRect = ScalingWindow::Get().Renderer().SrcRect();
+		const RECT srcRect = CursorSrcRect();
 
 		cursorPos.x = std::clamp(cursorPos.x, srcRect.left, srcRect.right - 1);
 		cursorPos.y = std::clamp(cursorPos.y, srcRect.top, srcRect.bottom - 1);

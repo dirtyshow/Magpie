@@ -474,6 +474,12 @@
   <data name="Profile_Cursor_DrawCursor_AdjustCursorSpeed.Header" xml:space="preserve">
     <value>縮放時調整游標速度</value>
   </data>
+  <data name="Profile_Cursor_CompensateCursorOffset.Header" xml:space="preserve">
+    <value>補償游標偏移</value>
+  </data>
+  <data name="Profile_Cursor_CompensateCursorOffset.Description" xml:space="preserve">
+    <value>用於以視窗左上角而非客戶區計算游標位置的舊遊戲，修正游標無法移到畫面頂端或左側的問題</value>
+  </data>
   <data name="Profile_Cursor_DrawCursor_Interpolation.Header" xml:space="preserve">
     <value>插值演算法</value>
   </data>
